@@ -1,0 +1,10 @@
+def mine():
+    inv_not_full = True
+    if theres ore:
+        start mining()
+        time.sleep(10)
+    while inv_not_full:
+        check if inv is full
+        if its full, return
+        if its not full, keep mining until it IS
+    
