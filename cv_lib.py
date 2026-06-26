@@ -1,13 +1,15 @@
 import cv2 as cv, numpy as np
-
- 
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 def load_screenshot(image_path):
     image = cv.imread(image_path)  # Reads the image from disk
     return image
 
 def find_minable_ore():
-    screenshot = load_screenshot(".\\game_screenshot.png")
-    template = cv.imread(".\\templates\\obsidian_ore.png")
+    screenshot_path = os.path.join(BASE_DIR, "game_screenshot.png")
+    template_path = os.path.join(BASE_DIR + "/templates", "obsidian_ore.png")
+    screenshot = load_screenshot(screenshot_path)
+    template = cv.imread(template_path)
     result = cv.matchTemplate(screenshot, template, cv.TM_CCOEFF_NORMED)
 
     threshold = 0.8
@@ -22,8 +24,10 @@ def find_minable_ore():
     
 
 def search_for_x(thing):
-    screenshot = load_screenshot(".\\game_screenshot.png")
-    template = load_screenshot(f".\\templates\\{thing}.png")
+    screenshot_path = os.path.join(BASE_DIR, "game_screenshot.png")
+    template_path = os.path.join(BASE_DIR+ "/templates", f"{thing}.png")
+    screenshot = load_screenshot(screenshot_path)
+    template = load_screenshot(template_path)
     
     # Match the template to the screenshot
     result = cv.matchTemplate(screenshot, template, cv.TM_CCOEFF_NORMED)

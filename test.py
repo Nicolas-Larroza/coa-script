@@ -36,7 +36,7 @@ driver = make_driver()
 def new_action():
     action = ActionChains(driver)
     touch = PointerInput(POINTER_TOUCH, "finger")
-    action.w3c_actions.add_pointer_input(POINTER_TOUCH, "finger")
+    action.w3c_actions.devices.append(touch)
     return action
 
 def press_interact():
@@ -218,6 +218,7 @@ def main():
         print(state)
         if state == 1 or 3:
             action = new_action()
+            action.w3c_actions.pointer_action.move_to_location(0,0)
             action.w3c_actions.pointer_action.pointer_up()
             action.perform()
             action.reset_actions()
