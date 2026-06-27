@@ -1,0 +1,9 @@
+the idea is:
+Find waypoint
+if found:
+    calculate a path that gets you in a straight line to the waypoint, that path must also calculate how many seconds it will
+    take to reach there
+    calculate a path to the waypoint.
+    mark waypoint as reached
+    find next waypoint
+    repeat
