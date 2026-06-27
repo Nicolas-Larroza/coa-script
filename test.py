@@ -6,24 +6,37 @@ from selenium.webdriver.common.actions.pointer_input import PointerInput
 import random, time, subprocess
 from cv_lib import find_minable_ore, search_for_x
 
-
+class Config():
+    def __init__(self):
+        self.screen_dimensions = get_screen_dimensions()
+        self.joystick_radius = 11
+        self.joystick_center = (47, 36)
 
 def adb_command(command):
     result = subprocess.run(command, shell = True, stdout= subprocess.PIPE, stderr=subprocess.PIPE)
     
     if result.returncode == 0:
-        pass
+        return result.stdout.decode().strip()
         
     else:
-        print("something went wrong\n", result.stdout.decode())
+        print("something went wrong\n", result.stderr.decode())
 
-def get_screen_res():
-    screen_res = adb_command("adb shell wm size")
-    x = screen_res.split(":")
+def get_screen_dimensions():
+    screen_dimensions = adb_command("adb shell wm size")
+    x = screen_dimensions.split(":")
     clean_list = x[1].split("x")
     for number in range(2):
         clean_list[number] = int(clean_list[number].strip())
     return clean_list
+
+def get_coordinates(percentages: tuple):
+    screen_dimensions = config.screen_dimensions
+    coordinates = []
+    for number in range(2):
+        coordinate = int((percentages[number]*screen_dimensions[number])/100)
+        coordinates.append(coordinate)
+    return coordinates
+
 
 def make_driver():
     options = UiAutomator2Options()
@@ -36,6 +49,7 @@ def make_driver():
         options=options
     )
     return driver
+
 driver = make_driver()
 
 def get_screen_res():
@@ -55,6 +69,9 @@ def get_screenshot():
     adb_command("adb shell screencap /sdcard/game_screenshot.png")
     adb_command("adb pull /sdcard/game_screenshot.png ./game_screenshot.png")
 
+config = Config()
+
+print(get_coordinates((36,36)))
 def go_to():
     action = new_action()
     action.w3c_actions.pointer_action.move_to_location(391 + + random.randint(-1, 1), 1000+ random.randint(-1, 1))
