@@ -31,7 +31,8 @@ def make_driver():
     return driver
 driver = make_driver()
 
-
+def get_screen_res():
+    adb_command("adb shell wm density")
 
 def new_action():
     action = ActionChains(driver)
