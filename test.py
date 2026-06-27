@@ -16,7 +16,14 @@ def adb_command(command):
         
     else:
         print("something went wrong\n", result.stdout.decode())
-        
+
+def get_screen_res():
+    screen_res = adb_command("adb shell wm size")
+    x = screen_res.split(":")
+    clean_list = x[1].split("x")
+    for number in range(2):
+        clean_list[number] = int(clean_list[number].strip())
+    return clean_list
 
 def make_driver():
     options = UiAutomator2Options()
@@ -32,7 +39,8 @@ def make_driver():
 driver = make_driver()
 
 def get_screen_res():
-    adb_command("adb shell wm density")
+    screen_res = adb_command("adb shell wm size")
+    print(screen_res)
 
 def new_action():
     action = ActionChains(driver)
