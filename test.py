@@ -11,6 +11,14 @@ class Config():
         self.screen_dimensions = get_screen_dimensions()
         self.joystick_radius = 11
         self.joystick_center = (47, 36)
+class Directions():
+    def __init__(self, config_object):
+        center = config_object.joystick_center
+        r = config_object.joystick_radius
+        self.right = (center[0] + r, center[1])
+        self.left = (center[0] - r, center[1])
+        self.down = (center[0], center[1] + r)
+        self.up = (center[0], center[1] - r)
 
 def adb_command(command):
     result = subprocess.run(command, shell = True, stdout= subprocess.PIPE, stderr=subprocess.PIPE)
@@ -70,98 +78,20 @@ def get_screenshot():
     adb_command("adb pull /sdcard/game_screenshot.png ./game_screenshot.png")
 
 config = Config()
-
-print(get_coordinates((36,36)))
-def go_to():
+directions = Directions(config)
+#direction must be a direction from the class "Directions", such as:
+# directions.right
+def move(direction, time_moving):
+    center = get_coordinates(config.joystick_center)
+    direction = get_coordinates(direction)
     action = new_action()
-    action.w3c_actions.pointer_action.move_to_location(391 + + random.randint(-1, 1), 1000+ random.randint(-1, 1))
+    action.w3c_actions.pointer_action.move_to_location(center[0], center[1])
     action.w3c_actions.pointer_action.pointer_down()
-
-    action.w3c_actions.pointer_action.move_to_location(816+ random.randint(-1, 1), 1043)
-    action.w3c_actions.pointer_action.pause(0.9)  
-
-
-    action.w3c_actions.pointer_action.move_to_location(882, 1036+ random.randint(-1, 1))
-    action.w3c_actions.pointer_action.pause(2) 
-
-
-    action.w3c_actions.pointer_action.move_to_location(882+ random.randint(-1, 1), 1010)
-    action.w3c_actions.pointer_action.pause(1.3)
-
-    action.w3c_actions.pointer_action.move_to_location(948, 866+ random.randint(-1, 1))
-    action.w3c_actions.pointer_action.pause(3)  
-
-
-    action.w3c_actions.pointer_action.move_to_location(1100+ random.randint(-1, 1), 1000+ random.randint(-1, 1))
-    action.w3c_actions.pointer_action.pause(2.8)
-
-
-    action.w3c_actions.pointer_action.pointer_up()
-
-    action.perform()
-    action.reset_actions()
-    time.sleep(random.uniform(2,3))
-    press_interact()
-    time.sleep(random.uniform(2,3))
-    action.w3c_actions.pointer_action.move_to_location(333, 972)
-    action.w3c_actions.pointer_action.pointer_down()
-    action.w3c_actions.pointer_action.move_to_location(200, 1031+ random.randint(-1, 1))
-    action.w3c_actions.pointer_action.pause(0.7)
-    action.w3c_actions.pointer_action.move_to_location(172+ random.randint(-1, 1), 1054)
-    action.w3c_actions.pointer_action.pause(0.6)
-    action.w3c_actions.pointer_action.move_to_location(145, 988)
-    action.w3c_actions.pointer_action.pause(0.2)
+    action.w3c_actions.pointer_action.move_to_location(direction[0], direction[1])
+    action.w3c_actions.pointer_action.pause(time_moving)
     action.w3c_actions.pointer_action.pointer_up()
     action.perform()
-    action.reset_actions()
-def go_back():
-    action = new_action()
-    action.w3c_actions.pointer_action.move_to_location(440+ random.randint(-1, 1), 922+ random.randint(-1, 1))
-    action.w3c_actions.pointer_action.pointer_down()
-    action.w3c_actions.pointer_action.move_to_location(706+ random.randint(-1, 1), 871)
-    action.w3c_actions.pointer_action.pause(0.7)
-    action.w3c_actions.pointer_action.move_to_location(751, 871+ random.randint(-1, 1))
-    action.w3c_actions.pointer_action.pause(0.5)
-    action.w3c_actions.pointer_action.pointer_up()
-    action.perform()
-    action.reset_actions()
-    time.sleep(random.uniform(2,3))
-    press_interact()
-    time.sleep(random.uniform(2,3))
-    action.w3c_actions.pointer_action.move_to_location(357+ random.randint(-1, 1), 811+ random.randint(-1, 1))
-    action.w3c_actions.pointer_action.pointer_down()
-    action.w3c_actions.pointer_action.move_to_location(139+ random.randint(-1, 1), 800+ random.randint(-1, 1))
-    action.w3c_actions.pointer_action.pause(1)
-    action.w3c_actions.pointer_action.move_to_location(125+ random.randint(-1, 1), 871)
-    action.w3c_actions.pointer_action.pause(0.5)
-    action.w3c_actions.pointer_action.move_to_location(46, 885)
-    action.w3c_actions.pointer_action.pause(5.4)
-    action.w3c_actions.pointer_action.move_to_location(40, 824+ random.randint(-1, 1))
-    action.w3c_actions.pointer_action.pause(1.9)
-    # a nudge to the left
-    action.w3c_actions.pointer_action.move_to_location(20+ random.randint(-1, 1), 850)
-    action.w3c_actions.pointer_action.pause(0.6)
-    action.w3c_actions.pointer_action.pointer_up()
-    action.perform()
-    action.reset_actions()
-    
-def look_for_more_obsidian():
-    action = new_action()
-    action.w3c_actions.pointer_action.move_to_location(391, 1000)
-    action.w3c_actions.pointer_action.pointer_down()
-    action.w3c_actions.pointer_action.move_to_location(591, 1000)
-    action.w3c_actions.pointer_action.pause(2)
-    action.w3c_actions.pointer_action.pointer_up()
-    action.perform()
-    action.reset_actions()
-    time.sleep(2)
-    action.w3c_actions.pointer_action.move_to_location(391, 1000)
-    action.w3c_actions.pointer_action.pointer_down()
-    action.w3c_actions.pointer_action.move_to_location(100, 989)
-    action.w3c_actions.pointer_action.pause(2.2)
-    action.w3c_actions.pointer_action.pointer_up()
-    action.perform()
-    action.reset_actions()
+
 def ore_present():
     get_screenshot()
     ores = find_minable_ore() 
@@ -215,9 +145,13 @@ def mine():
             print("no ore found, loser.")
             #look_for_more_obsidian()
             time.sleep(5)
-            
-            
+
+
+move(directions.right, 3)
+
+"""         
 state = 1
+
 def main():
     try:
         global state
@@ -254,7 +188,7 @@ for i in range(1,51):
     print(f"vuelta numero {i}!")
     main()
     print(f"vuelta numero {i} terminada!")
-
+"""
 
 driver.quit()
 
