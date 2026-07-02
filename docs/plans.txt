@@ -7,3 +7,10 @@ if found:
     mark waypoint as reached
     find next waypoint
     repeat
+
+that one didn't prove very successful, but I have another
+IDEA:
+Use the minimap (though making the bot able to use the minimap it's going to be a challenge in it of itself,
+i've never done something similar and it will be hard) to find the direction where to go to reach the target entrance,
+then only look for obstacles in front of the character, in the direction the character is facing. would probably be quite hard,
+maybe detectable, I don't think a normal player would open the minimap that much now that i think about it
